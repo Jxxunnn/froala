@@ -1,18 +1,32 @@
 'use client';
-import 'froala-editor/js/plugins/char_counter.min.js';
-import 'froala-editor/js/plugins/image.min.js';
-import 'froala-editor/js/plugins/markdown.min.js';
-import 'froala-editor/js/plugins/save.min.js';
+
+import 'froala-editor/css/froala_editor.css';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
-import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
-import '../../node_modules/froala-editor/css/froala_editor.css';
 
-const FroalaEditor = dynamic(() => import('react-froala-wysiwyg'), { ssr: false });
+const FroalaEditor = dynamic(
+  async () => {
+    const result = await Promise.all([
+      import('react-froala-wysiwyg'),
+      // @ts-ignore
+      import('froala-editor/js/plugins/char_counter.min.js'),
+      // @ts-ignore
+      import('froala-editor/js/plugins/image.min.js'),
+      // @ts-ignore
+      import('froala-editor/js/plugins/markdown.min.js'),
+      // @ts-ignore
+      import('froala-editor/js/plugins/save.min.js'),
+    ]);
+    return result[0];
+  },
+  { ssr: false }
+);
+const FroalaEditorView = dynamic(() => import('react-froala-wysiwyg/FroalaEditorView'), { ssr: false });
 
 export default function Home() {
   const [inZenMode, setInZenMode] = useState(false);
   const [model, setModel] = useState(() => {
+    if (typeof window === 'undefined') return '';
     return localStorage.getItem('savedText') || '';
   });
 
