@@ -34,6 +34,7 @@ export default function Home() {
       <FroalaEditor
         model={model}
         onModelChange={(e: string) => setModel(e)}
+        // @ts-ignore
         saveInterval={2000}
         config={{
           placeholderText: '글을 작성해보세요',

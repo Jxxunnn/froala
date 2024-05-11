@@ -25,3 +25,29 @@ body {
     text-wrap: balance;
   }
 }
+
+h1,
+.heading {
+  @apply text-3xl font-bold;
+}
+
+.froalaLink1 {
+  @apply underline text-[#2196f3] block;
+}
+
+.froalaLink2 {
+  @apply text-green-800 block;
+}
+
+.content-block {
+  position: relative;
+  transition: all 0.2s;
+}
+.content-block:hover .delete-btn,
+.content-block:focus-within .delete-btn {
+  display: block;
+}
+
+.delete-btn {
+  display: none;
+}
